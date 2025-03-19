@@ -3,18 +3,27 @@ name: Auto Update Clone
 on:
   push:
     branches:
-      - main  # Adjust this to your branch name
+      - main  # Change this if your branch is different
 
 jobs:
   update_clone:
-    runs-on: self-hosted  # Use the self-hosted runner
+    runs-on: self-hosted  # Ensures it runs on your server
 
     steps:
-      - name: Navigate to Clone Folder
-        run: cd /var/www/react-project  # Replace with actual path
+      - name: Navigate to Cloned Folder
+        run: cd /var/www/react-project
 
-      - name: Fetch and Pull Changes
+      - name: Set Git Credentials
         run: |
+          git config --global user.email "k213632@nu.edu.pk"  # Correct email
+          git config --global user.name "lachman1"  # Correct GitHub username
+          git config --global --unset http.https://github.com/.extraheader
+          git config --global credential.helper cache
+
+      - name: Pull Latest Changes
+        run: |
+          cd /var/www/react-project
           git reset --hard
           git clean -fd
-          git pull origin main  # Adjust branch name if needed
+          git pull origin main  # Change 'main' if your branch is different
+
