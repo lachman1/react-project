@@ -1,0 +1,20 @@
+name: Auto Update Clone
+
+on:
+  push:
+    branches:
+      - main  # Adjust this to your branch name
+
+jobs:
+  update_clone:
+    runs-on: self-hosted  # Use the self-hosted runner
+
+    steps:
+      - name: Navigate to Clone Folder
+        run: cd /var/www/react-project  # Replace with actual path
+
+      - name: Fetch and Pull Changes
+        run: |
+          git reset --hard
+          git clean -fd
+          git pull origin main  # Adjust branch name if needed
